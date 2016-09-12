@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {Page} from 'ionic-angular';
-import {Camera} from 'ionic-native';
+import { Camera } from 'ionic-native';
 
 // import { imgLib } from '../imgLib/imgLib';
 

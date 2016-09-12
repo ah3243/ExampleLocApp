@@ -1,12 +1,12 @@
-<ion-navbar *navbar>
-  <ion-title>
-    Home
-  </ion-title>
-</ion-navbar>
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content class="home">
-  <ion-card>
-    <ion-card-content>
       Hello World, this is my camera app
 
       <input #title type="text" name="imgTitle" placeholder="imageTitle">
@@ -16,7 +16,5 @@
       <p>{{title.value}}</p>
       <button (click)="takePicture(counter)">Add a Picture</button>
 
-    </ion-card-content>
-  </ion-card>
   <button *ngIf="base64Image">Post</button>
 </ion-content>
