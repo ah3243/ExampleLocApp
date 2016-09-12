@@ -9,10 +9,14 @@
     <ion-card-content>
       Hello World, this is my camera app
 
-      <button (click)="takePicture()">Take a Picture</button>
+      <input #title type="text" name="imgTitle" placeholder="imageTitle">
 
-      Latest Picture:
       <img [src]="base64Image" *ngIf="base64Image" />
+
+      <p>{{title.value}}</p>
+      <button (click)="takePicture(counter)">Add a Picture</button>
+
     </ion-card-content>
   </ion-card>
+  <button *ngIf="base64Image">Post</button>
 </ion-content>

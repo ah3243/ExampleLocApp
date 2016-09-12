@@ -1,14 +1,19 @@
+import { Component } from '@angular/core';
 import {Page} from 'ionic-angular';
 import {Camera} from 'ionic-native';
 
-@Page({
+// import { imgLib } from '../imgLib/imgLib';
+
+@Component({
   templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
-  public base64Image: string;
 
+    public base64Image: string;
+    public name: string;
+    
   constructor() {
-
+    this.name = "toots";
   }
 
   takePicture(){
