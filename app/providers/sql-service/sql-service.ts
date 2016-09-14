@@ -25,27 +25,31 @@ export class SqlService {
   }
 
   public add(title: string, base64Img: string) {
-    this.db.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
-      .then((data) => {
-        console.log("INSERTED: " + JSON.stringify(data));
-      }, (error) => {
-        console.log("ERROR: " + JSON.stringify(error));
-      });
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
+        .then((data) => {
+          console.log("INSERTED: " + JSON.stringify(data));
+        }, (error) => {
+          console.log("ERROR: " + JSON.stringify(error));
+        });
+    });
   }
 
   // Refresh and initialise the places object
   public refresh(places: Array<Object> ) {
-    this.db.executeSql("SELECT * FROM places", []).then((data) => {
-      places = [];
-      if (data.rows.length > 0) {
-        for (var i = 0; i < data.rows.length; i++) {
-          places.push({ title: data.rows.item(i).title, img: data.rows.item(i).img });
-        }
+    return new Promise((resolve, reject) => {
+        this.db.executeSql("SELECT * FROM places", []).then((data) => {
+          places = [];
+          if (data.rows.length > 0) {
+            for (var i = 0; i < data.rows.length; i++) {
+              places.push({ title: data.rows.item(i).title, img: data.rows.item(i).img });
+            }
+          }
+          resolve(places);
+        }, (error) => {
+          reject(error);
+        });
       }
-      return(places);
-    }, (error) => {
-      console.log("ERROR: " + JSON.stringify(error));
-    });
+    );
   }
-
 }
