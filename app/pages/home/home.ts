@@ -2,31 +2,42 @@ import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Camera, SQLite } from 'ionic-native';
 
-
 import { MapPage } from '../map-page/map-page';
+
+// Import service
+import { SqlService } from '../../providers/sql-service/sql-service';
 
 // import { imgLib } from '../imgLib/imgLib';
 
 @Component({
-    templateUrl: 'build/pages/home/home.html'
+    templateUrl: 'build/pages/home/home.html',
+    providers:[SqlService]
+
 })
 export class HomePage {
-    public database: SQLite;
-    public places: Array<Object>;
+    public places: Array<Object>
 
     public base64Image: string;
     public name: string;
 
-    constructor(private navCtrl: NavController, private platform: Platform) {
-        this.database = new SQLite();
-        this.database.openDatabase({ name: "data.db", location: "default" }).then(() => {
-            this.refresh();
-        }, (error) => {
-            console.log("ERROR: ", error);
-        });
+    // Inject SqlService into constructor of page component
+    constructor(private navCtrl: NavController, private platform: Platform, public sqlService: SqlService) {
+        // this.sqlService = sqlService;
+        
+        // this.database = new SQLite();
+        // this.database.openDatabase({ name: "data.db", location: "default" }).then(() => {
+        //     this.refresh();
+        // }, (error) => {
+        //     console.log("ERROR: ", error);
+        // });
 
-        // Instantiate name  
-        this.name = "toots";
+        // // Instantiate name  
+        // this.name = "toots";
+    }
+
+    addLoc(title: string, img: string){
+        this.sqlService.add(title, img);
+        this.navCtrl.push(MapPage);
     }
 
     takePicture() {
@@ -41,40 +52,6 @@ export class HomePage {
             console.log(err);
         });
     }
-
-    public add(title: string, base64Img: string) {
-        this.database.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
-            .then((data) => {
-                console.log("INSERTED: " + JSON.stringify(data));
-                this.navCtrl.push(MapPage);
-            }, (error) => {
-                console.log("ERROR: " + JSON.stringify(error));
-            });
-    }
-
-    // Refresh and initialise the places object
-    public refresh() {
-        this.database.executeSql("SELECT * FROM places", []).then((data) => {
-            this.places = [];
-            if (data.rows.length > 0) {
-                for (var i = 0; i < data.rows.length; i++) {
-                    this.places.push({ title: data.rows.item(i).title, img: data.rows.item(i).img });
-                }
-            }
-        }, (error) => {
-            console.log("ERROR: " + JSON.stringify(error));
-        });
-    }
-
-
-
-
-
-
-
-
-
-
 
 }
 
