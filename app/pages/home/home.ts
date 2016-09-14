@@ -7,8 +7,6 @@ import { MapPage } from '../map-page/map-page';
 // Import service
 import { SqlService } from '../../providers/sql-service/sql-service';
 
-// import { imgLib } from '../imgLib/imgLib';
-
 @Component({
     templateUrl: 'build/pages/home/home.html',
     providers:[SqlService]

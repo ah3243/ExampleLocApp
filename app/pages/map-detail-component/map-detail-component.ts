@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-/*
-  Generated class for the MapDetailComponentPage page.
+// Import service
+import { SqlService } from '../../providers/sql-service/sql-service';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/map-detail-component/map-detail-component.html',
 })

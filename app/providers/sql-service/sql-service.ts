@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { NavController } from 'ionic-angular';
 import { SQLite} from 'ionic-native';
-
-
 
 @Injectable()
 export class SqlService {
-  public db = new SQLite();
-    // public database: SQLite;
+  private db: SQLite;
+  private isOpen: boolean;
 
-
-  constructor(private navCtrl: NavController) {
-    this.db.openDatabase({
-      name: "data.db",
-      location: "default"
-    }).then(() => {
-      this.db.executeSql("CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, img TEXT)", {}).then((data) => {
-        console.log("TABLE CREATED: " + data);
-      }, (error) => {
-        console.log("Unable to execute SQL" + error);
+  public constructor() {
+    if(!this.isOpen){
+      this.db = new SQLite();
+      this.db.openDatabase({
+        name: "data.db",
+        location: "default"
+      }).then(() => {
+        this.db.executeSql("CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, img TEXT)", []).then((data) => {
+          console.log("TABLE CREATED: " + data);
+        }, (error) => {
+          console.log("Unable to execute SQL" + error);
+        });
+        this.isOpen=true;
       });
-    });
+    }
   }
 
-  add(title: string, base64Img: string) {
+  public add(title: string, base64Img: string) {
     this.db.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
       .then((data) => {
         console.log("INSERTED: " + JSON.stringify(data));
@@ -34,7 +34,7 @@ export class SqlService {
   }
 
   // Refresh and initialise the places object
-  refresh(places: Array<Object> ) {
+  public refresh(places: Array<Object> ) {
     this.db.executeSql("SELECT * FROM places", []).then((data) => {
       places = [];
       if (data.rows.length > 0) {
