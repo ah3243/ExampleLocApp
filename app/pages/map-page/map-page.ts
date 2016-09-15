@@ -28,7 +28,6 @@ export class MapPage{
   public load(){
     this.sqlService.refresh().then((results) => {
         this.places = <Array<Object>> results;
-       console.log('id: ' + results[0].id);
     }, (error) => { 
         console.log("ERROR: ", JSON.stringify(error)) 
     });
@@ -37,6 +36,7 @@ export class MapPage{
   public addLoc(){
     this.navCtrl.push(HomePage);
   }
+
   public viewLoc(itemId: number){
     this.navCtrl.push(MapDetailComponentPage, {
         itemNumber: itemId
@@ -49,7 +49,7 @@ export class MapPage{
        console.log("Removed Item: " + results);
        this.load();
      }, (error) => {
-       console.log("ERROR, deleting item: " + error);
+       console.log("ERROR, deleting item: " + JSON.stringify(error));
      })
   }
 }
