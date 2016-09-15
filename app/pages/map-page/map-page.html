@@ -1,17 +1,14 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>mapPage</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
   <button (click)="addLoc()">Add a Location</button>
    <ion-grid>
-         <ion-row  *ngFor="let p of places" (click)="viewLoc(p.id)"> 
-             <ion-col width-70>{{p.title}}</ion-col>
-             <!--<img [src]="base64I" *ngIf="base64I"/>-->
+         <ion-row  *ngFor="let p of places"> 
+             <ion-col (click)="viewLoc(p.id)" width-70>{{p.title}}</ion-col>
              <ion-col width-30><button (click)="deleteLoc(p.id)">Delete</button></ion-col>
          </ion-row>
     </ion-grid>

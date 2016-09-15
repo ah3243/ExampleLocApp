@@ -47,6 +47,7 @@ export class MapPage{
     this.sqlService.remove(id)
      .then((results) => {
        console.log("Removed Item: " + results);
+       this.load();
      }, (error) => {
        console.log("ERROR, deleting item: " + error);
      })
