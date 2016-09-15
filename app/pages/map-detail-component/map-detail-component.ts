@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 // Import service
 import { SqlService } from '../../providers/sql-service/sql-service';
@@ -8,9 +8,11 @@ import { SqlService } from '../../providers/sql-service/sql-service';
   templateUrl: 'build/pages/map-detail-component/map-detail-component.html',
 })
 export class MapDetailComponentPage {
+  public title: string;
+  public itemId: number;
 
-  constructor(private navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, params: NavParams) {
+    this.itemId = params.get("itemNumber");
   }
 
 }

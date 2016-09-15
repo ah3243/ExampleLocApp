@@ -6,16 +6,14 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <button (click)="addLoc()">Add a Location</button>
-  <button (click)="viewLoc()">View Location Detail</button>
   <button (click)="clearLocs()">Clear Locations</button>
-   <ion-list>
-         <ion-item *ngFor="let p of places">
-             {{p.title}}
+   <ion-grid>
+         <ion-row  *ngFor="let p of places" (click)="viewLoc(p.id)"> 
+             <ion-col width-70>{{p.title}}</ion-col>
              <!--<img [src]="base64I" *ngIf="base64I"/>-->
-             <button (click)="deleteLoc(p.id)">Delete</button>
-         </ion-item>
-    </ion-list>
+             <ion-col width-30><button (click)="deleteLoc(p.id)">Delete</button></ion-col>
+         </ion-row>
+    </ion-grid>
 </ion-content>

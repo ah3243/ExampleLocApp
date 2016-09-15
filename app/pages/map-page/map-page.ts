@@ -38,8 +38,10 @@ export class MapPage{
   public addLoc(){
     this.navCtrl.push(HomePage);
   }
-  public viewLoc(){
-    this.navCtrl.push(MapDetailComponentPage);
+  public viewLoc(itemId: number){
+    this.navCtrl.push(MapDetailComponentPage, {
+        itemNumber: itemId
+      });
   }
 
   public clearLocs(){
