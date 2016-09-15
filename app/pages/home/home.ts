@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Camera, SQLite } from 'ionic-native';
 
 import { MapPage } from '../map-page/map-page';
@@ -8,10 +8,10 @@ import { MapPage } from '../map-page/map-page';
 import { SqlService } from '../../providers/sql-service/sql-service';
 
 @Component({
-    templateUrl: 'build/pages/home/home.html',
-    providers:[SqlService]
+    templateUrl: 'build/pages/home/home.html'
 
 })
+
 export class HomePage {
     public places: Array<Object>
 
@@ -19,26 +19,19 @@ export class HomePage {
     public name: string;
 
     // Inject SqlService into constructor of page component
-    constructor(private navCtrl: NavController, private platform: Platform, public sqlService: SqlService) {
-        // this.sqlService = sqlService;
-        
-        // this.database = new SQLite();
-        // this.database.openDatabase({ name: "data.db", location: "default" }).then(() => {
-        //     this.refresh();
-        // }, (error) => {
-        //     console.log("ERROR: ", error);
-        // });
-
-        // // Instantiate name  
-        // this.name = "toots";
+    public constructor(private navCtrl: NavController, private sqlService: SqlService) {
+        this.places = [];
     }
 
-    addLoc(title: string, img: string){
-        this.sqlService.add(title, img);
-        this.navCtrl.push(MapPage);
+    public addLoc(title: string, img: string){
+        this.sqlService.add(title, img)
+            .then((result)=>{
+                console.log("added Data: ", result);
+                this.navCtrl.push(MapPage);
+            }, (error) => { console.log("ERROR: ", error)});
     }
 
-    takePicture() {
+    public takePicture() {
         Camera.getPicture({
             destinationType: Camera.DestinationType.DATA_URL,
             targetWidth: 1000,
@@ -50,7 +43,6 @@ export class HomePage {
             console.log(err);
         });
     }
-
 }
 
 

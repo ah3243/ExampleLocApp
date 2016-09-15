@@ -28,9 +28,9 @@ export class SqlService {
     return new Promise((resolve, reject) => {
       this.db.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
         .then((data) => {
-          console.log("INSERTED: " + JSON.stringify(data));
+          resolve(data);
         }, (error) => {
-          console.log("ERROR: " + JSON.stringify(error));
+          reject(error);
         });
     });
   }
