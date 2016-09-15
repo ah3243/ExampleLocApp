@@ -26,7 +26,19 @@ export class SqlService {
 
   public add(title: string, base64Img: string) {
     return new Promise((resolve, reject) => {
-      this.db.executeSql("INSERT INTO places (title, img) VALUES ( '" + title + "', '" + base64Img + "')", [])
+      this.db.executeSql("INSERT INTO places (title, img) VALUES ( '"+ title +"', '"+ base64Img +"')", [])
+        .then((data) => {
+          resolve(data);
+        }, (error) => {
+          reject(error);
+        });
+    });
+  }
+
+  // Clear all Locations
+  public clear(){
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("DELETE FROM [places]", [])
         .then((data) => {
           resolve(data);
         }, (error) => {
@@ -36,13 +48,19 @@ export class SqlService {
   }
 
   // Refresh and initialise the places object
-  public refresh(places: Array<Object> ) {
+  public refresh() {
     return new Promise((resolve, reject) => {
         this.db.executeSql("SELECT * FROM places", []).then((data) => {
-          places = [];
+          let places = [];
           if (data.rows.length > 0) {
+            console.log('number of rows: ' + data.rows.length);
             for (var i = 0; i < data.rows.length; i++) {
-              places.push({ title: data.rows.item(i).title, img: data.rows.item(i).img });
+              console.log('Anotherone bites the dust..'+ data.rows.item(i).title);
+              places.push({ 
+                id: data.rows.item(i).id,
+                title: data.rows.item(i).title, 
+                img: data.rows.item(i).img 
+              });
             }
           }
           resolve(places);

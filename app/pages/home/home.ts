@@ -9,7 +9,6 @@ import { SqlService } from '../../providers/sql-service/sql-service';
 
 @Component({
     templateUrl: 'build/pages/home/home.html'
-
 })
 
 export class HomePage {
@@ -24,7 +23,7 @@ export class HomePage {
     }
 
     public addLoc(title: string, img: string){
-        this.sqlService.add(title, img)
+        this.sqlService.add(title, this.base64Image)
             .then((result)=>{
                 console.log("added Data: ", result);
                 this.navCtrl.push(MapPage);
