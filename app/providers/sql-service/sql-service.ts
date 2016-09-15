@@ -38,7 +38,19 @@ export class SqlService {
   // Clear all Locations
   public clear(){
     return new Promise((resolve, reject) => {
-      this.db.executeSql("DELETE FROM [places]", [])
+      this.db.executeSql("DELETE FROM places", [])
+        .then((data) => {
+          resolve(data);
+        }, (error) => {
+          reject(error);
+        });
+    });
+  }
+
+  // Remove individual Location
+  public remove(id: number){
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("DELETE FROM places WHERE id = "+ id +";", [])
         .then((data) => {
           resolve(data);
         }, (error) => {

@@ -13,8 +13,9 @@
   <button (click)="clearLocs()">Clear Locations</button>
    <ion-list>
          <ion-item *ngFor="let p of places">
-             {{p.title}} 
-             <img [src]="base64I" *ngIf="base64I"/>
+             {{p.title}}
+             <!--<img [src]="base64I" *ngIf="base64I"/>-->
+             <button (click)="deleteLoc(p.id)">Delete</button>
          </ion-item>
     </ion-list>
 </ion-content>

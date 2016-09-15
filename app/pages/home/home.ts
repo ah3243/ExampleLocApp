@@ -26,7 +26,7 @@ export class HomePage {
         this.sqlService.add(title, this.base64Image)
             .then((result)=>{
                 console.log("added Data: ", result);
-                this.navCtrl.push(MapPage);
+                this.navCtrl.pop();
             }, (error) => { console.log("ERROR: ", error)});
     }
 
