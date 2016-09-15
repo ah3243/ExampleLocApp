@@ -9,10 +9,25 @@ import { SqlService } from '../../providers/sql-service/sql-service';
 })
 export class MapDetailComponentPage {
   public title: string;
+  public base64Img: string;
   public itemId: number;
 
-  constructor(public navCtrl: NavController, params: NavParams) {
+  constructor(public navCtrl: NavController, params: NavParams, private sqlService: SqlService) {
     this.itemId = params.get("itemNumber");
   }
 
+  public ionViewDidEnter(){
+    console.log('Entering map-detail Page');
+    this.load();
+  }
+
+  public load(){
+    this.sqlService.locDetail(this.itemId).then((results) => {
+      this.title = results[0].title;
+      this.base64Img = results[0].img;
+      console.log('Detail Loaded ' + this.title);     
+    }, (error) => {
+      console.log('Error loading detail: '+ error );
+    });
+  }
 }

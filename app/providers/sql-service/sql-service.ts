@@ -35,18 +35,6 @@ export class SqlService {
     });
   }
 
-  // Clear all Locations
-  public clear(){
-    return new Promise((resolve, reject) => {
-      this.db.executeSql("DELETE FROM places", [])
-        .then((data) => {
-          resolve(data);
-        }, (error) => {
-          reject(error);
-        });
-    });
-  }
-
   // Remove individual Location
   public remove(id: number){
     return new Promise((resolve, reject) => {
@@ -59,23 +47,41 @@ export class SqlService {
     });
   }
 
+  public locDetail(id: number){
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT * FROM places WHERE id = "+ id +";",[])
+        .then((data) => {
+          if(data.rows.length===1){
+            // console.log("ttitle: " + data.rows.item(0).title + " id: " + data.rows.item(0).id + " img: " + data.rows.item(0).img );
+            let place = [];
+            place.push({
+              id: data.rows.item(0).id,
+              title: data.rows.item(0).title,
+              img: data.rows.item(0).img
+            });
+            resolve(place);
+          }
+        }, (error) => {
+          reject(error);
+        });
+    });
+  }
+
   // Refresh and initialise the places object
   public refresh() {
     return new Promise((resolve, reject) => {
         this.db.executeSql("SELECT * FROM places", []).then((data) => {
-          let places = [];
+          let place = [];
           if (data.rows.length > 0) {
-            console.log('number of rows: ' + data.rows.length);
             for (var i = 0; i < data.rows.length; i++) {
-              console.log('Anotherone bites the dust..'+ data.rows.item(i).title);
-              places.push({ 
+              place.push({ 
                 id: data.rows.item(i).id,
                 title: data.rows.item(i).title, 
                 img: data.rows.item(i).img 
               });
             }
           }
-          resolve(places);
+          resolve(place);
         }, (error) => {
           reject(error);
         });

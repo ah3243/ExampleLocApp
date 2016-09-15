@@ -8,7 +8,6 @@
 
 <ion-content padding>
   <button (click)="addLoc()">Add a Location</button>
-  <button (click)="clearLocs()">Clear Locations</button>
    <ion-grid>
          <ion-row  *ngFor="let p of places" (click)="viewLoc(p.id)"> 
              <ion-col width-70>{{p.title}}</ion-col>

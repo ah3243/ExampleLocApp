@@ -28,7 +28,6 @@ export class MapPage{
   public load(){
     this.sqlService.refresh().then((results) => {
         this.places = <Array<Object>> results;
-      //  this.base64I = this.places[0][0].img;
        console.log('id: ' + results[0].id);
     }, (error) => { 
         console.log("ERROR: ", JSON.stringify(error)) 
@@ -44,14 +43,6 @@ export class MapPage{
       });
   }
 
-  public clearLocs(){
-    this.sqlService.clear()
-      .then((results) => {
-       console.log("Tables Cleared: ", results); 
-      }, (error) => {
-        console.log("Error Clearing Tables: ", error);
-      })    
-  }
   public deleteLoc(id: number){
     this.sqlService.remove(id)
      .then((results) => {
